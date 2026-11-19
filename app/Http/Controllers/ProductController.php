@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -34,6 +34,35 @@ class ProductController extends Controller
 
         $newProduct->save();
 
+        return redirect('/products');
+    }
+
+    public function getProduct($id)
+    {
+        $product = Product::find($id);
+
+        return view('products.product', [
+            'product' => $product,
+            'id' => $id
+        ]);
+    }
+
+    public function editProduct($id, Request $request)
+    {
+        $product = Product::find($id);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'sku' => [
+                'required',
+                'string',
+                Rule::unique('products', 'sku')->ignore($product->id),
+            ],
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+        ]);
+
+
+        $product->update($validated);
         return redirect('/products');
     }
 }
