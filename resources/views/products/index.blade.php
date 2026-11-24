@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  @vite('resources/css/app.css')
   <title>Document</title>
 </head>
 <body>
-  <main>
+  <main class="bg-red-500">
     <h1>Produtos do StockFlow</h1>
     <section>
       <h2>Cadastrar produto</h2>
